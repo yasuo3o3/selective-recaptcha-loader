@@ -1,0 +1,40 @@
+/**
+ * reCAPTCHA badge styling
+ * Minimizes the badge without completely hiding it (which violates ToS)
+ */
+
+.grecaptcha-badge {
+	opacity: 0.1 !important;
+	transform: scale(0.8) !important;
+	transition: opacity 0.3s ease, transform 0.3s ease !important;
+	pointer-events: auto !important;
+}
+
+.grecaptcha-badge:hover {
+	opacity: 0.8 !important;
+	transform: scale(1) !important;
+}
+
+/* Ensure badge stays in bottom right but less intrusive */
+.grecaptcha-badge {
+	bottom: 14px !important;
+	right: 14px !important;
+	z-index: 999999 !important;
+}
+
+/* Disclosure text styling */
+.srl-recaptcha-disclosure {
+	font-size: 11px !important;
+	color: #666 !important;
+	margin-top: 8px !important;
+	line-height: 1.4 !important;
+}
+
+.srl-recaptcha-disclosure a {
+	color: #0073aa !important;
+	text-decoration: none !important;
+}
+
+.srl-recaptcha-disclosure a:hover {
+	text-decoration: underline !important;
+}
