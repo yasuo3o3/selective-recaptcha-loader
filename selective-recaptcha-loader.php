@@ -102,7 +102,6 @@ class Selective_Recaptcha_Loader {
 
 		if ( is_admin() ) {
 			require_once SRL_PLUGIN_DIR . 'admin/class-srl-settings-page.php';
-			require_once SRL_PLUGIN_DIR . 'admin/class-srl-metabox.php';
 		}
 	}
 
@@ -117,7 +116,6 @@ class Selective_Recaptcha_Loader {
 		// Initialize admin components.
 		if ( is_admin() ) {
 			SRL_Settings_Page::instance();
-			SRL_Metabox::instance();
 		}
 	}
 

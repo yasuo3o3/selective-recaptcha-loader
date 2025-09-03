@@ -39,19 +39,6 @@ function srl_is_form_page( $post_id = null ) {
 	return $detector->is_form_page( $post_id );
 }
 
-/**
- * Check if site has site-wide CF7 forms.
- *
- * @return bool True if site-wide forms are detected.
- */
-function srl_is_sitewide_form() {
-	if ( ! class_exists( 'WPCF7' ) ) {
-		return false;
-	}
-
-	$detector = SRL_Detector::instance();
-	return $detector->is_sitewide_form();
-}
 
 /**
  * Get plugin option.
@@ -76,41 +63,12 @@ function srl_get_options() {
 /**
  * Get current plugin mode.
  *
- * @return string Current mode (auto, global, selective).
+ * @return string Current mode (global, selective).
  */
 function srl_get_mode() {
-	return srl()->get_option( 'mode', 'auto' );
+	return srl()->get_option( 'mode', 'selective' );
 }
 
-/**
- * Check if badge hiding is enabled.
- *
- * @return bool True if badge hiding is enabled.
- */
-function srl_is_badge_hidden() {
-	return srl()->get_option( 'hide_badge_add_disclosure', false );
-}
-
-/**
- * Get disclosure text HTML.
- *
- * @return string Disclosure HTML.
- */
-function srl_get_disclosure_html() {
-	if ( ! srl_is_badge_hidden() ) {
-		return '';
-	}
-
-	$enqueuer = SRL_Enqueuer::instance();
-	return $enqueuer->get_disclosure_html();
-}
-
-/**
- * Output disclosure text.
- */
-function srl_disclosure_text() {
-	echo srl_get_disclosure_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is escaped in get_disclosure_html()
-}
 
 /**
  * Check if Contact Form 7 is active and compatible.
@@ -146,5 +104,5 @@ function srl_get_version() {
  * @return bool True if frontend request.
  */
 function srl_is_frontend() {
-	return ! is_admin() && ! is_login() && ! wp_doing_ajax() && ! wp_is_json_request();
+	return ! is_admin() && ! wp_doing_ajax() && ! wp_is_json_request();
 }

@@ -2,21 +2,34 @@
 
 バージョン履歴と変更ログです。このプロジェクトは[Semantic Versioning](https://semver.org/spec/v2.0.0.html)に従います。
 
-## [v0.01] - Unreleased
+## [v0.02] - Unreleased
 
-### Added（追加）
-- 初回公開準備
-- uninstall.php 追加（クリーンアップ）
-- autoload 無効化
-- transient キー一意化（マルチサイト対応）
-- badge.css の条件付き読み込み
-- nonce 検証順序の改善
+### Removed（削除）
+- Autoモード機能の完全削除（Selectiveモードにマイグレーション）
+- ページ別メタボックス機能の完全削除
+- reCAPTCHA v3バッジ最小化機能の完全削除
+- サイト全体フォーム検出ロジックの削除
+- ファイル削除: admin/class-srl-metabox.php, assets/badge.css
 
 ### Changed（変更）
-- （現在なし）
+- 設定画面を2択に簡素化（Global/Selectiveのみ）
+- デフォルトモードをSelectiveに変更
+- プラグイン説明とドキュメントを簡素化
 
 ### Fixed（修正）
-- （現在なし）
+- is_login()関数の存在しない参照を削除
+
+---
+
+## [v0.01] - 2025-09-02
+
+### Added（追加）
+- 初回公開
+- Global/Selective読み込みモード
+- スマートフォーム検出（ショートコード、ブロック）
+- ホワイトリスト・テンプレートヒント機能
+- 開発者向けフィルターシステム
+- WordPress 6.0+ / PHP 7.4+ 対応
 
 ---
 

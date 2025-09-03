@@ -29,12 +29,6 @@ class SRL_Detector {
 	 */
 	private $cache = array();
 
-	/**
-	 * Site-wide form detection cache.
-	 *
-	 * @var bool|null
-	 */
-	private $sitewide_cache = null;
 
 	/**
 	 * Get class instance.
@@ -52,7 +46,7 @@ class SRL_Detector {
 	 * Constructor.
 	 */
 	private function __construct() {
-		add_action( 'wp_footer', array( $this, 'detect_sitewide_forms' ), 1 );
+		// コンストラクタは空にする（Autoモードのsite-wide検出を削除）
 	}
 
 	/**
@@ -82,10 +76,6 @@ class SRL_Detector {
 			$is_form_page = true;
 		}
 
-		// Check per-post meta.
-		if ( ! $is_form_page && $post && get_post_meta( $post->ID, 'srl_force_load', true ) ) {
-			$is_form_page = true;
-		}
 
 		// Check whitelist.
 		if ( ! $is_form_page && $this->is_whitelisted_page() ) {
@@ -111,84 +101,19 @@ class SRL_Detector {
 	 * @return bool True if reCAPTCHA should be loaded.
 	 */
 	public function should_load_recaptcha() {
-		$mode = srl()->get_option( 'mode', 'auto' );
+		$mode = srl()->get_option( 'mode', 'selective' );
 
 		switch ( $mode ) {
 			case 'global':
 				return true;
 
 			case 'selective':
-				return $this->is_form_page();
-
-			case 'auto':
 			default:
-				// In auto mode, check for site-wide forms.
-				if ( $this->is_sitewide_form() ) {
-					return true;
-				}
 				return $this->is_form_page();
 		}
 	}
 
-	/**
-	 * Check if there are site-wide CF7 forms.
-	 *
-	 * @return bool True if site-wide forms are detected.
-	 */
-	public function is_sitewide_form() {
-		if ( null !== $this->sitewide_cache ) {
-			return $this->sitewide_cache;
-		}
 
-		$is_sitewide = false;
-
-		// Check if forms are commonly rendered in footer/header/widgets.
-		$transient_key = 'srl_sitewide_detection';
-		$cached_detection = get_transient( $transient_key );
-
-		if ( false !== $cached_detection ) {
-			$is_sitewide = (bool) $cached_detection;
-		} else {
-			// Simple heuristic: check if forms appear in widget areas.
-			$is_sitewide = $this->detect_widget_forms();
-
-			// Cache the result for 1 hour.
-			set_transient( $transient_key, $is_sitewide ? 1 : 0, HOUR_IN_SECONDS );
-		}
-
-		// Apply filter for custom integrations.
-		$is_sitewide = apply_filters( 'srl_is_sitewide_form', $is_sitewide );
-
-		$this->sitewide_cache = $is_sitewide;
-		return $is_sitewide;
-	}
-
-	/**
-	 * Detect forms in widget areas during footer rendering.
-	 */
-	public function detect_sitewide_forms() {
-		global $wp_registered_sidebars;
-
-		if ( ! is_array( $wp_registered_sidebars ) ) {
-			return;
-		}
-
-		foreach ( $wp_registered_sidebars as $sidebar_id => $sidebar ) {
-			if ( in_array( $sidebar_id, array( 'footer', 'header' ), true ) ||
-				 false !== strpos( $sidebar_id, 'footer' ) ||
-				 false !== strpos( $sidebar_id, 'header' ) ) {
-
-				ob_start();
-				dynamic_sidebar( $sidebar_id );
-				$sidebar_content = ob_get_clean();
-
-				if ( $this->has_cf7_shortcode( $sidebar_content ) ) {
-					set_transient( 'srl_sitewide_detection', 1, HOUR_IN_SECONDS );
-					break;
-				}
-			}
-		}
-	}
 
 	/**
 	 * Check if content contains CF7 shortcode.
@@ -308,42 +233,4 @@ class SRL_Detector {
 		return false;
 	}
 
-	/**
-	 * Detect forms in widget areas.
-	 *
-	 * @return bool True if forms are found in widgets.
-	 */
-	private function detect_widget_forms() {
-		global $wp_registered_widgets;
-
-		if ( ! is_array( $wp_registered_widgets ) ) {
-			return false;
-		}
-
-		// Check text widgets for CF7 shortcodes.
-		$text_widgets = get_option( 'widget_text', array() );
-		if ( is_array( $text_widgets ) ) {
-			foreach ( $text_widgets as $widget ) {
-				if ( is_array( $widget ) && ! empty( $widget['text'] ) ) {
-					if ( $this->has_cf7_shortcode( $widget['text'] ) ) {
-						return true;
-					}
-				}
-			}
-		}
-
-		// Check custom HTML widgets.
-		$custom_html_widgets = get_option( 'widget_custom_html', array() );
-		if ( is_array( $custom_html_widgets ) ) {
-			foreach ( $custom_html_widgets as $widget ) {
-				if ( is_array( $widget ) && ! empty( $widget['content'] ) ) {
-					if ( $this->has_cf7_shortcode( $widget['content'] ) ) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
 }
