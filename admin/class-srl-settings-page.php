@@ -111,14 +111,6 @@ class SRL_Settings_Page {
 			'srl_main_section'
 		);
 
-		// Template hints setting.
-		add_settings_field(
-			'template_hints',
-			__( 'Template hints (filenames; one per line)', 'selective-recaptcha-loader' ),
-			array( $this, 'render_template_hints_field' ),
-			$this->page_slug,
-			'srl_main_section'
-		);
 
 	}
 
@@ -201,24 +193,15 @@ class SRL_Settings_Page {
 		?>
 		<textarea name="<?php echo esc_attr( $this->option_name ); ?>[whitelist]" rows="5" cols="50" class="regular-text"><?php echo esc_textarea( $whitelist ); ?></textarea>
 		<p class="description">
-			<?php esc_html_e( 'Enter post IDs, slugs, or regex patterns (one per line). Regex patterns should start and end with forward slashes.', 'selective-recaptcha-loader' ); ?>
+			<?php esc_html_e( 'Pages matching the given Post ID, slug, or regular expression will **always** load reCAPTCHA. One entry per line. Regex must start and end with a slash.', 'selective-recaptcha-loader' ); ?><br>
+			<?php esc_html_e( 'Examples:', 'selective-recaptcha-loader' ); ?><br>
+			- <?php esc_html_e( 'Post ID (e.g., 123)', 'selective-recaptcha-loader' ); ?><br>
+			- <?php esc_html_e( 'Slug (e.g., contact)', 'selective-recaptcha-loader' ); ?><br>
+			- <?php esc_html_e( 'Regex (e.g., /^https:\/\/example\.com\/custom/)', 'selective-recaptcha-loader' ); ?>
 		</p>
 		<?php
 	}
 
-	/**
-	 * Render template hints field.
-	 */
-	public function render_template_hints_field() {
-		$options = srl()->get_options();
-		$template_hints = isset( $options['template_hints'] ) ? $options['template_hints'] : '';
-		?>
-		<textarea name="<?php echo esc_attr( $this->option_name ); ?>[template_hints]" rows="3" cols="50" class="regular-text"><?php echo esc_textarea( $template_hints ); ?></textarea>
-		<p class="description">
-			<?php esc_html_e( 'Enter template filenames (one per line) that should always load reCAPTCHA. Example: contact.php', 'selective-recaptcha-loader' ); ?>
-		</p>
-		<?php
-	}
 
 
 
@@ -250,10 +233,6 @@ class SRL_Settings_Page {
 			$sanitized['whitelist'] = sanitize_textarea_field( $input['whitelist'] );
 		}
 
-		// Sanitize template hints.
-		if ( isset( $input['template_hints'] ) ) {
-			$sanitized['template_hints'] = sanitize_textarea_field( $input['template_hints'] );
-		}
 
 		// 旧トランジェントの削除（Auto関連・バッジ関連）
 		delete_transient( 'selective_recaptcha_loader_sitewide_detection_' . get_current_blog_id() );

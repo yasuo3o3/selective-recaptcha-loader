@@ -23,13 +23,10 @@ Load reCAPTCHA only where Contact Form 7 forms are present or on all pages as de
 **🎯 Smart Detection:**
 - Detects CF7 shortcodes in post content
 - Identifies CF7 blocks in Gutenberg editor
-- Recognizes forms in widget areas (text widgets, custom HTML widgets)
-- Template-based detection for custom implementations
-- Per-page override controls
+- Whitelist-based override for specific pages
 
 **⚙️ Advanced Configuration:**
-- Whitelist specific pages by ID, slug, or regex patterns
-- Template hints for theme-specific form locations
+- Whitelist specific pages by ID, slug, or regex patterns (pages matching the whitelist will **always** load reCAPTCHA)
 - Comprehensive filter system for developers
 
 
@@ -69,7 +66,11 @@ No, this plugin requires Contact Form 7 to be active. It will gracefully deactiv
 
 = Can I force reCAPTCHA to load on specific pages? =
 
-Yes! Add pages to the whitelist in settings, or use the `srl_is_form_page` filter.
+Yes! Add pages to the whitelist in settings using:
+- Post ID (e.g., 123)
+- Page slug (e.g., contact)
+- Regular expression (e.g., /^https:\/\/example\.com\/custom/)
+You can also use the `srl_is_form_page` filter for custom logic.
 
 = Is this plugin compatible with caching plugins? =
 
@@ -133,7 +134,7 @@ Initial release of Selective reCAPTCHA Loader for CF7.
 
 **スマート検出:**
 - ショートコード、Gutenbergブロック内のフォームを検出
-- ホワイトリスト機能（ページID、スラッグ、正規表現対応）
+- ホワイトリスト機能（ページID、スラッグ、正規表現対応、ホワイトリストに一致したページは**必ず**reCAPTCHAを読み込みます）
 
 = インストール =
 

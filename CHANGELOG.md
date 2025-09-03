@@ -9,12 +9,14 @@
 - ページ別メタボックス機能の完全削除
 - reCAPTCHA v3バッジ最小化機能の完全削除
 - サイト全体フォーム検出ロジックの削除
+- テンプレートヒント機能の完全削除
 - ファイル削除: admin/class-srl-metabox.php, assets/badge.css
 
 ### Changed（変更）
 - 設定画面を2択に簡素化（Global/Selectiveのみ）
 - デフォルトモードをSelectiveに変更
 - プラグイン説明とドキュメントを簡素化
+- ホワイトリスト設定の説明文を改善（入力例を追加）
 
 ### Fixed（修正）
 - is_login()関数の存在しない参照を削除

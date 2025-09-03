@@ -82,10 +82,6 @@ class SRL_Detector {
 			$is_form_page = true;
 		}
 
-		// Check template hints.
-		if ( ! $is_form_page && $this->matches_template_hints() ) {
-			$is_form_page = true;
-		}
 
 		// Apply filter.
 		$is_form_page = apply_filters( 'srl_is_form_page', $is_form_page, $post );
@@ -210,27 +206,5 @@ class SRL_Detector {
 		return false;
 	}
 
-	/**
-	 * Check if current template matches hints.
-	 *
-	 * @return bool True if template matches hints.
-	 */
-	private function matches_template_hints() {
-		$template_hints = srl()->get_option( 'template_hints', '' );
-		if ( empty( $template_hints ) ) {
-			return false;
-		}
-
-		$hints = array_filter( array_map( 'trim', explode( "\n", $template_hints ) ) );
-		$current_template = basename( get_page_template() );
-
-		foreach ( $hints as $hint ) {
-			if ( $current_template === $hint ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 }
