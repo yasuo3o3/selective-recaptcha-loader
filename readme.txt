@@ -2,9 +2,9 @@
 Contributors: netservice
 Tags: contact-form-7, recaptcha, performance, optimization, forms
 Requires at least: 6.0
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.01
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ Yes, the plugin is designed to work with caching plugins. The detection logic ru
 * WordPress 6.0+ and PHP 7.4+ compatibility
 
 == Upgrade Notice ==
+
+= 0.2 =
+Simplified to Global/Selective modes with whitelist support. Removed Auto mode, metabox, and badge features for better usability.
 
 = 0.01 =
 Initial release of Selective reCAPTCHA Loader for CF7.

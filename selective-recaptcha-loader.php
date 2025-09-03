@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Selective reCAPTCHA Loader for CF7
- * Description:       Load reCAPTCHA only where Contact Form 7 forms are present. Auto-detects site-wide footer forms and switches to Global mode when appropriate.
- * Version:           0.01
+ * Description:       Load reCAPTCHA only where Contact Form 7 forms are present or on all pages as desired.
+ * Version:           0.2
  * Author:            Netservice
  * Author URI:        https://netservice.jp/
  * License:           GPLv2 or later
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'SRL_VERSION', '0.01' );
+define( 'SRL_VERSION', '0.2' );
 define( 'SRL_PLUGIN_FILE', __FILE__ );
 define( 'SRL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SRL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

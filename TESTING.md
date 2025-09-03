@@ -1,7 +1,7 @@
 # TESTING – Selective reCAPTCHA Loader for CF7
 
 このドキュメントは **本番前の手動テスト** と **自動化テスト（CI）** の手順を示します。  
-対象バージョン: v0.01（Unreleased）
+対象バージョン: 0.2
 
 ---
 
