@@ -193,11 +193,11 @@ class SRL_Settings_Page {
 		?>
 		<textarea name="<?php echo esc_attr( $this->option_name ); ?>[whitelist]" rows="5" cols="50" class="regular-text"><?php echo esc_textarea( $whitelist ); ?></textarea>
 		<p class="description">
-			<?php esc_html_e( 'Pages matching the given Post ID, slug, or regular expression will **always** load reCAPTCHA. One entry per line. Regex must start and end with a slash.', 'selective-recaptcha-loader' ); ?><br>
+			<?php esc_html_e( 'Pages matching the given Post ID, slug, or regular expression will always load reCAPTCHA. One entry per line. Regex must start and end with a slash.', 'selective-recaptcha-loader' ); ?><br><br>
 			<?php esc_html_e( 'Examples:', 'selective-recaptcha-loader' ); ?><br>
-			- <?php esc_html_e( 'Post ID (e.g., 123)', 'selective-recaptcha-loader' ); ?><br>
-			- <?php esc_html_e( 'Slug (e.g., contact)', 'selective-recaptcha-loader' ); ?><br>
-			- <?php esc_html_e( 'Regex (e.g., /^https:\/\/example\.com\/custom/)', 'selective-recaptcha-loader' ); ?>
+			- <?php esc_html_e( 'Post ID (example: 123)', 'selective-recaptcha-loader' ); ?><br>
+			- <?php esc_html_e( 'Page slug (example: contact)', 'selective-recaptcha-loader' ); ?><br>
+			- <?php esc_html_e( 'Regular expression (example: /^https:\/\/example\.com\/custom/)', 'selective-recaptcha-loader' ); ?>
 		</p>
 		<?php
 	}

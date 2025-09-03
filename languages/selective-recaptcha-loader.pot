@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Selective reCAPTCHA Loader for CF7 0.01\n"
+"Project-Id-Version: Selective reCAPTCHA Loader for CF7 0.02\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 12:00+0000\n"
+"POT-Creation-Date: 2025-09-03 08:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,114 +13,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/class-srl-metabox.php:61 admin/class-srl-settings-page.php:68 admin/class-srl-settings-page.php:69
+#: admin/class-srl-settings-page.php:68 admin/class-srl-settings-page.php:72
 msgid "Selective reCAPTCHA"
 msgstr ""
 
-#: admin/class-srl-metabox.php:81
-msgid "Load reCAPTCHA for this page"
-msgstr ""
-
-#: admin/class-srl-metabox.php:85
-msgid "Force reCAPTCHA to load on this page even if no Contact Form 7 forms are detected."
-msgstr ""
-
-#: admin/class-srl-settings-page.php:86
+#: admin/class-srl-settings-page.php:90
 msgid "Main Settings"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:93
+#: admin/class-srl-settings-page.php:99
 msgid "Mode"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:101
+#: admin/class-srl-settings-page.php:108
 msgid "Whitelist (IDs / slugs / regex; one per line)"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:109
-msgid "Template hints (filenames; one per line)"
-msgstr ""
-
-#: admin/class-srl-settings-page.php:117
-msgid "Badge & Disclosure"
-msgstr ""
-
-#: admin/class-srl-settings-page.php:124
-msgid "Hide v3 badge and append disclosure text"
-msgstr ""
-
-#: admin/class-srl-settings-page.php:132
-msgid "Custom disclosure text"
-msgstr ""
-
-#: admin/class-srl-settings-page.php:141
+#: admin/class-srl-settings-page.php:130
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:146
+#: admin/class-srl-settings-page.php:135
 msgid "Selective reCAPTCHA Loader Settings"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:151
+#: admin/class-srl-settings-page.php:141
 msgid "Settings saved."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:157
+#: admin/class-srl-settings-page.php:149
 msgid "Contact Form 7 is not active. This plugin requires Contact Form 7 to function properly."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:169
+#: admin/class-srl-settings-page.php:168
 msgid "Configure how and when reCAPTCHA assets are loaded for Contact Form 7 forms."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:176
-msgid "Configure reCAPTCHA v3 badge visibility and disclosure text."
-msgstr ""
-
 #: admin/class-srl-settings-page.php:186
-msgid "Auto (detect site-wide forms)"
-msgstr ""
-
-#: admin/class-srl-settings-page.php:189
 msgid "Global (load reCAPTCHA on all pages)"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:192
+#: admin/class-srl-settings-page.php:190
 msgid "Selective (only on pages with CF7 forms)"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:195
-msgid "Auto mode detects forms in footer/header areas and switches to Global mode when needed."
+#: admin/class-srl-settings-page.php:194
+msgid "Choose Global to load reCAPTCHA on all pages, or Selective to load only on pages with Contact Form 7 forms."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:207
-msgid "Enter post IDs, slugs, or regex patterns (one per line). Regex patterns should start and end with forward slashes."
+#: admin/class-srl-settings-page.php:209
+msgid "Pages matching the given Post ID, slug, or regular expression will always load reCAPTCHA. One entry per line. Regex must start and end with a slash."
 msgstr ""
 
-#: admin/class-srl-settings-page.php:218
-msgid "Enter template filenames (one per line) that should always load reCAPTCHA. Example: contact.php"
+#: admin/class-srl-settings-page.php:210
+msgid "Examples:"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:228
-msgid "Hide reCAPTCHA v3 badge and append disclosure text near forms"
+#: admin/class-srl-settings-page.php:211
+msgid "Post ID (example: 123)"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:231
-msgid "This helps comply with reCAPTCHA terms while maintaining good user experience. The badge will be visually minimized and disclosure text will be shown."
+#: admin/class-srl-settings-page.php:212
+msgid "Page slug (example: contact)"
 msgstr ""
 
-#: admin/class-srl-settings-page.php:241
-msgid "Optional custom text. Use {privacy_link} and {tos_link} placeholders. Leave empty to use default text."
+#: admin/class-srl-settings-page.php:213
+msgid "Regular expression (example: /^https:\\/\\/example\\.com\\/custom/)"
 msgstr ""
 
-#: inc/class-srl-enqueuer.php:103
-msgid "This site is protected by reCAPTCHA and the Google {privacy_link} and {tos_link} apply."
-msgstr ""
-
-#: inc/class-srl-enqueuer.php:108
+#: inc/functions-template.php:125
 msgid "Privacy Policy"
 msgstr ""
 
-#: inc/class-srl-enqueuer.php:113
+#: inc/functions-template.php:130
 msgid "Terms of Service"
+msgstr ""
+
+#: inc/functions-template.php:140
+msgid "This site is protected by reCAPTCHA and the Google {privacy_link} and {tos_link} apply."
 msgstr ""
