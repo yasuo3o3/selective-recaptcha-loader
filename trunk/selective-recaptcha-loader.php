@@ -59,21 +59,7 @@ class Selective_Recaptcha_Loader {
 	 * Constructor.
 	 */
 	private function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( $this, 'init' ) );
-	}
-
-	/**
-	 * Load plugin text domain.
-	 *
-	 * @since 0.01
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'selective-recaptcha-loader',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages'
-		);
 	}
 
 	/**

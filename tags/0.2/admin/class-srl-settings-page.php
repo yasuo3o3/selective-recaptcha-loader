@@ -127,7 +127,8 @@ class SRL_Settings_Page {
 			<h1><?php esc_html_e( 'Selective reCAPTCHA Loader Settings', 'selective-recaptcha-loader' ); ?></h1>
 
 			<?php
-			if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['settings-updated'] ) && wp_unslash( sanitize_text_field( $_GET['settings-updated'] ) ) ) {
 				?>
 				<div class="notice notice-success is-dismissible">
 					<p><?php esc_html_e( 'Settings saved.', 'selective-recaptcha-loader' ); ?></p>
