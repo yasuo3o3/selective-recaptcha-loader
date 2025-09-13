@@ -13,19 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enqueuer class for controlling reCAPTCHA assets.
  */
-class SRL_Enqueuer {
+class Selerelo_Enqueuer {
 
 	/**
 	 * Class instance.
 	 *
-	 * @var SRL_Enqueuer
+	 * @var Selerelo_Enqueuer
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get class instance.
 	 *
-	 * @return SRL_Enqueuer
+	 * @return Selerelo_Enqueuer
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -57,7 +57,7 @@ class SRL_Enqueuer {
 			return;
 		}
 
-		$detector = SRL_Detector::instance();
+		$detector = Selerelo_Detector::instance();
 
 		// If we shouldn't load reCAPTCHA on this page, dequeue the assets.
 		if ( ! $detector->should_load_recaptcha() ) {
@@ -69,7 +69,7 @@ class SRL_Enqueuer {
 	 * Dequeue and deregister reCAPTCHA assets.
 	 */
 	private function dequeue_recaptcha_assets() {
-		$handles = apply_filters( 'srl_recaptcha_handles', array(
+		$handles = apply_filters( 'selerelo_recaptcha_handles', array(
 			'wpcf7-recaptcha',
 			'google-recaptcha',
 		) );
@@ -85,7 +85,7 @@ class SRL_Enqueuer {
 	 */
 	public function add_disclosure_text() {
 		// Skip if disclosure is not enabled.
-		if ( ! srl()->get_option( 'hide_badge_add_disclosure', false ) ) {
+		if ( ! selerelo()->get_option( 'hide_badge_add_disclosure', false ) ) {
 			return;
 		}
 
@@ -95,7 +95,7 @@ class SRL_Enqueuer {
 		}
 
 		// Skip if reCAPTCHA should not be loaded.
-		$detector = SRL_Detector::instance();
+		$detector = Selerelo_Detector::instance();
 		if ( ! $detector->should_load_recaptcha() ) {
 			return;
 		}
@@ -117,7 +117,7 @@ class SRL_Enqueuer {
 	 * @return string Disclosure HTML.
 	 */
 	public function get_disclosure_html() {
-		$custom_text = srl()->get_option( 'custom_disclosure_text', '' );
+		$custom_text = selerelo()->get_option( 'custom_disclosure_text', '' );
 
 		if ( ! empty( $custom_text ) ) {
 			$text = $custom_text;
@@ -147,7 +147,7 @@ class SRL_Enqueuer {
 			$text
 		);
 
-		return apply_filters( 'srl_disclosure_html', $html );
+		return apply_filters( 'selerelo_disclosure_html', $html );
 	}
 
 	/**
@@ -155,12 +155,12 @@ class SRL_Enqueuer {
 	 */
 	public function add_badge_css() {
 		// Skip if badge hiding is not enabled.
-		if ( ! srl()->get_option( 'hide_badge_add_disclosure', false ) ) {
+		if ( ! selerelo()->get_option( 'hide_badge_add_disclosure', false ) ) {
 			return;
 		}
 
 		// reCAPTCHA が読み込まれないページでは CSS も不要
-		$detector = SRL_Detector::instance();
+		$detector = Selerelo_Detector::instance();
 		if ( ! $detector->should_load_recaptcha() ) {
 			return;
 		}
@@ -170,7 +170,7 @@ class SRL_Enqueuer {
 			return;
 		}
 
-		$css_url = SRL_PLUGIN_URL . 'assets/badge.css?ver=' . SRL_VERSION;
-		wp_enqueue_style( 'srl-badge-css', $css_url, array(), SRL_VERSION );
+		$css_url = SELERELO_PLUGIN_URL . 'assets/badge.css?ver=' . SELERELO_VERSION;
+		wp_enqueue_style( 'selerelo-badge-css', $css_url, array(), SELERELO_VERSION );
 	}
 }

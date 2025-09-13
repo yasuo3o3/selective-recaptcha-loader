@@ -12,10 +12,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // プラグイン設定を削除
-delete_option( 'srl_settings' );
+delete_option( 'selerelo_settings' );
 
 // サイト全体フォーム検出のキャッシュを削除
 delete_transient( 'selective_recaptcha_loader_sitewide_detection_' . get_current_blog_id() );
 
 // 全投稿から個別設定メタを削除
-delete_metadata( 'post', 0, 'srl_force_load', '', true );
+delete_metadata( 'post', 0, 'selerelo_force_load', '', true );

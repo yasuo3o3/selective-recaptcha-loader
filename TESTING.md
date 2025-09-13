@@ -56,7 +56,7 @@
 
 ### 1-5. アンインストール
 - [ ] 設定を保存後、**停止→削除**  
-  - 期待：`wp_options` の `srl_settings` が削除される
+  - 期待：`wp_options` の `selerelo_settings` が削除される
 
 ### 1-6. 翻訳（i18n）
 - [ ] 管理画面が日本語・英語で適切に切り替わる（`languages/*.mo` を認識）

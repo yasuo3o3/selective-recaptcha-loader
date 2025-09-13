@@ -18,10 +18,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'SRL_VERSION', '0.01' );
-define( 'SRL_PLUGIN_FILE', __FILE__ );
-define( 'SRL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'SRL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'SELERELO_VERSION', '0.01' );
+define( 'SELERELO_PLUGIN_FILE', __FILE__ );
+define( 'SELERELO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'SELERELO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Main plugin class.
@@ -96,13 +96,13 @@ class Selective_Recaptcha_Loader {
 	 * Load plugin classes.
 	 */
 	private function load_classes() {
-		require_once SRL_PLUGIN_DIR . 'inc/class-srl-detector.php';
-		require_once SRL_PLUGIN_DIR . 'inc/class-srl-enqueuer.php';
-		require_once SRL_PLUGIN_DIR . 'inc/functions-template.php';
+		require_once SELERELO_PLUGIN_DIR . 'inc/class-srl-detector.php';
+		require_once SELERELO_PLUGIN_DIR . 'inc/class-srl-enqueuer.php';
+		require_once SELERELO_PLUGIN_DIR . 'inc/functions-template.php';
 
 		if ( is_admin() ) {
-			require_once SRL_PLUGIN_DIR . 'admin/class-srl-settings-page.php';
-			require_once SRL_PLUGIN_DIR . 'admin/class-srl-metabox.php';
+			require_once SELERELO_PLUGIN_DIR . 'admin/class-srl-settings-page.php';
+			require_once SELERELO_PLUGIN_DIR . 'admin/class-srl-metabox.php';
 		}
 	}
 
@@ -111,13 +111,13 @@ class Selective_Recaptcha_Loader {
 	 */
 	private function init_components() {
 		// Initialize detector and enqueuer.
-		SRL_Detector::instance();
-		SRL_Enqueuer::instance();
+		Selerelo_Detector::instance();
+		Selerelo_Enqueuer::instance();
 
 		// Initialize admin components.
 		if ( is_admin() ) {
-			SRL_Settings_Page::instance();
-			SRL_Metabox::instance();
+			Selerelo_Settings_Page::instance();
+			Selerelo_Metabox::instance();
 		}
 	}
 
@@ -130,7 +130,7 @@ class Selective_Recaptcha_Loader {
 	 */
 	public function get_option( $key, $default = null ) {
 		if ( empty( $this->options ) ) {
-			$this->options = get_option( 'srl_settings', array() );
+			$this->options = get_option( 'selerelo_settings', array() );
 		}
 
 		return isset( $this->options[ $key ] ) ? $this->options[ $key ] : $default;
@@ -143,7 +143,7 @@ class Selective_Recaptcha_Loader {
 	 */
 	public function get_options() {
 		if ( empty( $this->options ) ) {
-			$this->options = get_option( 'srl_settings', array() );
+			$this->options = get_option( 'selerelo_settings', array() );
 		}
 
 		return $this->options;
@@ -156,7 +156,7 @@ class Selective_Recaptcha_Loader {
 	 */
 	public function update_options( $options ) {
 		$this->options = $options;
-		update_option( 'srl_settings', $options, false );
+		update_option( 'selerelo_settings', $options, false );
 	}
 }
 
@@ -166,9 +166,9 @@ class Selective_Recaptcha_Loader {
  * @since 0.01
  * @return Selective_Recaptcha_Loader
  */
-function srl() {
+function selerelo() {
 	return Selective_Recaptcha_Loader::instance();
 }
 
 // Initialize the plugin.
-srl();
+selerelo();

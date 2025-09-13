@@ -56,16 +56,16 @@ The plugin hooks into WordPress's script enqueuing system with a priority of 120
 = Developer Features =
 
 **Filters:**
-- `srl_is_form_page` - Modify form page detection
-- `srl_is_sitewide_form` - Override site-wide form detection
-- `srl_disclosure_html` - Customize disclosure text output
-- `srl_recaptcha_handles` - Define which script handles to control
+- `selerelo_is_form_page` - Modify form page detection
+- `selerelo_is_sitewide_form` - Override site-wide form detection
+- `selerelo_disclosure_html` - Customize disclosure text output
+- `selerelo_recaptcha_handles` - Define which script handles to control
 
 **Template Functions:**
-- `srl_should_load_recaptcha()` - Check if reCAPTCHA will load
-- `srl_is_form_page()` - Check if page has forms
-- `srl_is_sitewide_form()` - Check for site-wide forms
-- `srl_get_option()` - Get plugin options
+- `selerelo_should_load_recaptcha()` - Check if reCAPTCHA will load
+- `selerelo_is_form_page()` - Check if page has forms
+- `selerelo_is_sitewide_form()` - Check for site-wide forms
+- `selerelo_get_option()` - Get plugin options
 
 == Installation ==
 
@@ -86,7 +86,7 @@ Auto mode (default) will detect this and automatically switch to Global mode to 
 
 = Can I force reCAPTCHA to load on specific pages? =
 
-Yes! Use the per-page metabox in the post editor, add pages to the whitelist in settings, or use the `srl_is_form_page` filter.
+Yes! Use the per-page metabox in the post editor, add pages to the whitelist in settings, or use the `selerelo_is_form_page` filter.
 
 = Is this plugin compatible with caching plugins? =
 

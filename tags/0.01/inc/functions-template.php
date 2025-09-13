@@ -15,12 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return bool True if reCAPTCHA should be loaded.
  */
-function srl_should_load_recaptcha() {
+function selerelo_should_load_recaptcha() {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		return false;
 	}
 
-	$detector = SRL_Detector::instance();
+	$detector = Selerelo_Detector::instance();
 	return $detector->should_load_recaptcha();
 }
 
@@ -30,12 +30,12 @@ function srl_should_load_recaptcha() {
  * @param int|WP_Post|null $post_id Post ID or post object.
  * @return bool True if forms are present.
  */
-function srl_is_form_page( $post_id = null ) {
+function selerelo_is_form_page( $post_id = null ) {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		return false;
 	}
 
-	$detector = SRL_Detector::instance();
+	$detector = Selerelo_Detector::instance();
 	return $detector->is_form_page( $post_id );
 }
 
@@ -44,12 +44,12 @@ function srl_is_form_page( $post_id = null ) {
  *
  * @return bool True if site-wide forms are detected.
  */
-function srl_is_sitewide_form() {
+function selerelo_is_sitewide_form() {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		return false;
 	}
 
-	$detector = SRL_Detector::instance();
+	$detector = Selerelo_Detector::instance();
 	return $detector->is_sitewide_form();
 }
 
@@ -60,8 +60,8 @@ function srl_is_sitewide_form() {
  * @param mixed  $default Default value.
  * @return mixed Option value.
  */
-function srl_get_option( $key, $default = null ) {
-	return srl()->get_option( $key, $default );
+function selerelo_get_option( $key, $default = null ) {
+	return selerelo()->get_option( $key, $default );
 }
 
 /**
@@ -69,8 +69,8 @@ function srl_get_option( $key, $default = null ) {
  *
  * @return array All plugin options.
  */
-function srl_get_options() {
-	return srl()->get_options();
+function selerelo_get_options() {
+	return selerelo()->get_options();
 }
 
 /**
@@ -78,8 +78,8 @@ function srl_get_options() {
  *
  * @return string Current mode (auto, global, selective).
  */
-function srl_get_mode() {
-	return srl()->get_option( 'mode', 'auto' );
+function selerelo_get_mode() {
+	return selerelo()->get_option( 'mode', 'auto' );
 }
 
 /**
@@ -87,7 +87,7 @@ function srl_get_mode() {
  *
  * @return bool True if badge hiding is enabled.
  */
-function srl_is_badge_hidden() {
+function selerelo_is_badge_hidden() {
 	return srl()->get_option( 'hide_badge_add_disclosure', false );
 }
 
@@ -96,20 +96,20 @@ function srl_is_badge_hidden() {
  *
  * @return string Disclosure HTML.
  */
-function srl_get_disclosure_html() {
-	if ( ! srl_is_badge_hidden() ) {
+function selerelo_get_disclosure_html() {
+	if ( ! selerelo_is_badge_hidden() ) {
 		return '';
 	}
 
-	$enqueuer = SRL_Enqueuer::instance();
+	$enqueuer = Selerelo_Enqueuer::instance();
 	return $enqueuer->get_disclosure_html();
 }
 
 /**
  * Output disclosure text.
  */
-function srl_disclosure_text() {
-	echo srl_get_disclosure_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is escaped in get_disclosure_html()
+function selerelo_disclosure_text() {
+	echo selerelo_get_disclosure_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is escaped in get_disclosure_html()
 }
 
 /**
@@ -117,7 +117,7 @@ function srl_disclosure_text() {
  *
  * @return bool True if CF7 is compatible.
  */
-function srl_is_cf7_compatible() {
+function selerelo_is_cf7_compatible() {
 	if ( ! class_exists( 'WPCF7' ) ) {
 		return false;
 	}
@@ -136,8 +136,8 @@ function srl_is_cf7_compatible() {
  *
  * @return string Plugin version.
  */
-function srl_get_version() {
-	return SRL_VERSION;
+function selerelo_get_version() {
+	return SELERELO_VERSION;
 }
 
 /**
@@ -145,6 +145,6 @@ function srl_get_version() {
  *
  * @return bool True if frontend request.
  */
-function srl_is_frontend() {
+function selerelo_is_frontend() {
 	return ! is_admin() && ! is_login() && ! wp_doing_ajax() && ! wp_is_json_request();
 }

@@ -42,13 +42,13 @@ The plugin hooks into WordPress's script enqueuing system with a priority of 120
 = Developer Features =
 
 **Filters:**
-- `srl_is_form_page` - Modify form page detection
-- `srl_recaptcha_handles` - Define which script handles to control
+- `selerelo_is_form_page` - Modify form page detection
+- `selerelo_recaptcha_handles` - Define which script handles to control
 
 **Template Functions:**
-- `srl_should_load_recaptcha()` - Check if reCAPTCHA will load
-- `srl_is_form_page()` - Check if page has forms
-- `srl_get_option()` - Get plugin options
+- `selerelo_should_load_recaptcha()` - Check if reCAPTCHA will load
+- `selerelo_is_form_page()` - Check if page has forms
+- `selerelo_get_option()` - Get plugin options
 
 == Installation ==
 
@@ -70,7 +70,7 @@ Yes! Add pages to the whitelist in settings using:
 - Post ID (e.g., 123)
 - Page slug (e.g., contact)
 - Regular expression (e.g., /^https:\/\/example\.com\/custom/)
-You can also use the `srl_is_form_page` filter for custom logic.
+You can also use the `selerelo_is_form_page` filter for custom logic.
 
 = Is this plugin compatible with caching plugins? =
 

@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Settings page class.
  */
-class SRL_Settings_Page {
+class Selerelo_Settings_Page {
 
 	/**
 	 * Class instance.
 	 *
-	 * @var SRL_Settings_Page
+	 * @var Selerelo_Settings_Page
 	 */
 	private static $instance = null;
 
@@ -27,26 +27,26 @@ class SRL_Settings_Page {
 	 *
 	 * @var string
 	 */
-	private $page_slug = 'srl-settings';
+	private $page_slug = 'selerelo-settings';
 
 	/**
 	 * Settings group name.
 	 *
 	 * @var string
 	 */
-	private $settings_group = 'srl_settings_group';
+	private $settings_group = 'selerelo_settings_group';
 
 	/**
 	 * Option name.
 	 *
 	 * @var string
 	 */
-	private $option_name = 'srl_settings';
+	private $option_name = 'selerelo_settings';
 
 	/**
 	 * Get class instance.
 	 *
-	 * @return SRL_Settings_Page
+	 * @return Selerelo_Settings_Page
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -87,7 +87,7 @@ class SRL_Settings_Page {
 		);
 
 		add_settings_section(
-			'srl_main_section',
+			'selerelo_main_section',
 			__( 'Main Settings', 'selective-recaptcha-loader' ),
 			array( $this, 'render_main_section' ),
 			$this->page_slug
@@ -99,7 +99,7 @@ class SRL_Settings_Page {
 			__( 'Mode', 'selective-recaptcha-loader' ),
 			array( $this, 'render_mode_field' ),
 			$this->page_slug,
-			'srl_main_section'
+			'selerelo_main_section'
 		);
 
 		// Whitelist setting.
@@ -108,7 +108,7 @@ class SRL_Settings_Page {
 			__( 'Whitelist (IDs / slugs / regex; one per line)', 'selective-recaptcha-loader' ),
 			array( $this, 'render_whitelist_field' ),
 			$this->page_slug,
-			'srl_main_section'
+			'selerelo_main_section'
 		);
 
 
@@ -166,7 +166,7 @@ class SRL_Settings_Page {
 	 * Render mode field.
 	 */
 	public function render_mode_field() {
-		$options = srl()->get_options();
+		$options = selerelo()->get_options();
 		$mode = isset( $options['mode'] ) ? $options['mode'] : 'selective';
 		?>
 		<fieldset>
@@ -189,7 +189,7 @@ class SRL_Settings_Page {
 	 * Render whitelist field.
 	 */
 	public function render_whitelist_field() {
-		$options = srl()->get_options();
+		$options = selerelo()->get_options();
 		$whitelist = isset( $options['whitelist'] ) ? $options['whitelist'] : '';
 		?>
 		<textarea name="<?php echo esc_attr( $this->option_name ); ?>[whitelist]" rows="5" cols="50" class="regular-text"><?php echo esc_textarea( $whitelist ); ?></textarea>
@@ -216,7 +216,7 @@ class SRL_Settings_Page {
 		$sanitized = array();
 
 		// マイグレーション: 既存のautoモードをselectiveに変換
-		$current_options = srl()->get_options();
+		$current_options = selerelo()->get_options();
 		if ( isset( $current_options['mode'] ) && 'auto' === $current_options['mode'] ) {
 			// 初回ロード時にautoをselectiveにマイグレーション
 			$input['mode'] = 'selective';
@@ -237,7 +237,7 @@ class SRL_Settings_Page {
 
 		// 旧トランジェントの削除（Auto関連・バッジ関連）
 		delete_transient( 'selective_recaptcha_loader_sitewide_detection_' . get_current_blog_id() );
-		delete_transient( 'srl_sitewide_detection' );
+		delete_transient( 'selerelo_sitewide_detection' );
 
 		return $sanitized;
 	}

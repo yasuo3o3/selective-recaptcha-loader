@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Detector class for identifying CF7 forms.
  */
-class SRL_Detector {
+class Selerelo_Detector {
 
 	/**
 	 * Class instance.
 	 *
-	 * @var SRL_Detector
+	 * @var Selerelo_Detector
 	 */
 	private static $instance = null;
 
@@ -39,7 +39,7 @@ class SRL_Detector {
 	/**
 	 * Get class instance.
 	 *
-	 * @return SRL_Detector
+	 * @return Selerelo_Detector
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -83,7 +83,7 @@ class SRL_Detector {
 		}
 
 		// Check per-post meta.
-		if ( ! $is_form_page && $post && get_post_meta( $post->ID, 'srl_force_load', true ) ) {
+		if ( ! $is_form_page && $post && get_post_meta( $post->ID, 'selerelo_force_load', true ) ) {
 			$is_form_page = true;
 		}
 
@@ -98,7 +98,7 @@ class SRL_Detector {
 		}
 
 		// Apply filter.
-		$is_form_page = apply_filters( 'srl_is_form_page', $is_form_page, $post );
+		$is_form_page = apply_filters( 'selerelo_is_form_page', $is_form_page, $post );
 
 		// Cache and return result.
 		$this->cache[ $cache_key ] = $is_form_page;
@@ -111,7 +111,7 @@ class SRL_Detector {
 	 * @return bool True if reCAPTCHA should be loaded.
 	 */
 	public function should_load_recaptcha() {
-		$mode = srl()->get_option( 'mode', 'auto' );
+		$mode = selerelo()->get_option( 'mode', 'auto' );
 
 		switch ( $mode ) {
 			case 'global':
@@ -143,7 +143,7 @@ class SRL_Detector {
 		$is_sitewide = false;
 
 		// Check if forms are commonly rendered in footer/header/widgets.
-		$transient_key = 'srl_sitewide_detection';
+		$transient_key = 'selerelo_sitewide_detection';
 		$cached_detection = get_transient( $transient_key );
 
 		if ( false !== $cached_detection ) {
@@ -157,7 +157,7 @@ class SRL_Detector {
 		}
 
 		// Apply filter for custom integrations.
-		$is_sitewide = apply_filters( 'srl_is_sitewide_form', $is_sitewide );
+		$is_sitewide = apply_filters( 'selerelo_is_sitewide_form', $is_sitewide );
 
 		$this->sitewide_cache = $is_sitewide;
 		return $is_sitewide;
@@ -183,7 +183,7 @@ class SRL_Detector {
 				$sidebar_content = ob_get_clean();
 
 				if ( $this->has_cf7_shortcode( $sidebar_content ) ) {
-					set_transient( 'srl_sitewide_detection', 1, HOUR_IN_SECONDS );
+					set_transient( 'selerelo_sitewide_detection', 1, HOUR_IN_SECONDS );
 					break;
 				}
 			}
@@ -245,7 +245,7 @@ class SRL_Detector {
 	 * @return bool True if page is whitelisted.
 	 */
 	private function is_whitelisted_page() {
-		$whitelist = srl()->get_option( 'whitelist', '' );
+		$whitelist = selerelo()->get_option( 'whitelist', '' );
 		if ( empty( $whitelist ) ) {
 			return false;
 		}
