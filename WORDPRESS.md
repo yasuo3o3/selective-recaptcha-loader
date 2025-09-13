@@ -95,3 +95,59 @@
 ## セキュリティ標準の一言メモ
 - 「出力はesc_、入力はsanitize_、変更操作はnonce+権限チェック」→ ゴールデンルールを見出しで強調
 
+
+## 命名・プレフィックス規約
+- 3文字以下の接頭辞は禁止（例：`srl` はNG）。4文字以上で固有にする（例：`selerelo_`、`SELERELO_`、`Selerelo_*`）。
+- 対象：関数、クラス、定数、グローバル変数、フック名、オプション名、`do_action`/`apply_filters`のタグ文字列。
+- 予約・混同NG：`wp_` / `_` / `__` はWPコア予約なので使用禁止。
+- 検証：
+  - `grep -R "\\bsrl_" -n .` と `grep -R "\\bSRL_" -n .` が0件
+  - `php -l $(git ls-files '*.php')`で構文確認
+
+## Contributors管理
+- `readme.txt`の`Contributors:`にはWordPress.orgのユーザー名を列挙。
+- 表示したくない場合は空でも可。
+- 公開後に新しいアカウントへオーナー移管可能。
+
+## アセット管理
+- `assets/`はZIPに同梱しない。承認後にSVNの`assets/`ディレクトリへアップ。
+- `.gitattributes`で以下を除外：
+  - `assets export-ignore`
+
+## SVN構造と配布ZIP
+- SVN標準：`/trunk`（本体）`/tags`（スナップショット）`/branches`。
+- ZIPには`tags/`や`branches/`を含めない。
+- 推奨`.gitattributes`：
+  - `tags export-ignore`
+  - `branches export-ignore`
+  - `.vscode export-ignore`
+  - `.history export-ignore`
+  - `.claude export-ignore`
+  - `.gitignore export-ignore`
+  - `.gitattributes export-ignore`
+  - `CHANGELOG.md export-ignore`
+  - `TESTING.md export-ignore`
+  - `DEVELOPER.md export-ignore`
+  - `README.md export-ignore`
+- ZIP作成：
+  ```bash
+  git archive --format=zip --output=../PLUGIN-SLUG.zip --prefix=PLUGIN-SLUG/ HEAD
+  ```
+
+## 翻訳ファイル（.po/.mo）
+- 翻訳文字列は命名規約対象外。
+- `msgid`/`msgstr`はそのままで問題なし。
+- `Text Domain`はスラッグ名と一致させる。
+
+## レビュー対応ワークフロー
+- `php -l`で構文確認。
+- PHPCS(WPCS)・Plugin Checkを実行。
+- `grep -Ri "\\bsrl_"`、`grep -Ri "\\bSRL_"`で残存確認。
+- ZIPに不要物が入っていないか確認。
+- `readme.txt`のContributors・Stable tag・Requires(WP/PHP)整合性確認。
+- 修正版ZIPをアップ後、スレッドに「反映済み」と返信。
+
+## 連絡・オーナーシップ
+- レビュー連絡は既存スレッドで返信（新規メール作成禁止）。
+- メール受信問題はSPF/DKIM/DMARCと`@wordpress.org`許可設定を確認。
+- スラッグは承認後変更不可。必要な場合は審査中に明示。
