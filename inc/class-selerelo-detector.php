@@ -68,10 +68,6 @@ class Selerelo_Detector {
 
 		// MIN-03: Early safety check for post object availability
 		if ( ! $post ) {
-			// MIN-03: Log for debugging when WP_DEBUG_LOG is enabled
-			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-				error_log( 'Selerelo: Failed to get post object for form detection' );
-			}
 			// Cache and return safe default
 			$this->cache[ $cache_key ] = false;
 			return false;
