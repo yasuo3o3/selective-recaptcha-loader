@@ -13,19 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enqueuer class for controlling reCAPTCHA assets.
  */
-class SRL_Enqueuer {
+class Selerelo_Enqueuer {
 
 	/**
 	 * Class instance.
 	 *
-	 * @var SRL_Enqueuer
+	 * @var Selerelo_Enqueuer
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get class instance.
 	 *
-	 * @return SRL_Enqueuer
+	 * @return Selerelo_Enqueuer
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -55,7 +55,7 @@ class SRL_Enqueuer {
 			return;
 		}
 
-		$detector = SRL_Detector::instance();
+		$detector = Selerelo_Detector::instance();
 
 		// If we shouldn't load reCAPTCHA on this page, dequeue the assets.
 		if ( ! $detector->should_load_recaptcha() ) {
@@ -67,7 +67,7 @@ class SRL_Enqueuer {
 	 * Dequeue and deregister reCAPTCHA assets.
 	 */
 	private function dequeue_recaptcha_assets() {
-		$handles = apply_filters( 'srl_recaptcha_handles', array(
+		$handles = apply_filters( 'selerelo_recaptcha_handles', array(
 			'wpcf7-recaptcha',
 			'google-recaptcha',
 		) );

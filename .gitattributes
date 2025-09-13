@@ -1,0 +1,14 @@
+# Git attributes for distribution archive
+# 除外対象ファイル
+DEVELOPER.md export-ignore
+TESTING.md export-ignore
+README.md export-ignore
+CHANGELOG.md export-ignore
+composer.json export-ignore
+CLAUDE.md export-ignore
+
+# 除外対象ディレクトリ
+.claude export-ignore
+.history export-ignore
+.vscode export-ignore
+assets export-ignore

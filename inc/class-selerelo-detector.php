@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Detector class for identifying CF7 forms.
  */
-class SRL_Detector {
+class Selerelo_Detector {
 
 	/**
 	 * Class instance.
 	 *
-	 * @var SRL_Detector
+	 * @var Selerelo_Detector
 	 */
 	private static $instance = null;
 
@@ -33,7 +33,7 @@ class SRL_Detector {
 	/**
 	 * Get class instance.
 	 *
-	 * @return SRL_Detector
+	 * @return Selerelo_Detector
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -84,7 +84,7 @@ class SRL_Detector {
 
 
 		// Apply filter.
-		$is_form_page = apply_filters( 'srl_is_form_page', $is_form_page, $post );
+		$is_form_page = apply_filters( 'selerelo_is_form_page', $is_form_page, $post );
 
 		// Cache and return result.
 		$this->cache[ $cache_key ] = $is_form_page;
@@ -97,7 +97,7 @@ class SRL_Detector {
 	 * @return bool True if reCAPTCHA should be loaded.
 	 */
 	public function should_load_recaptcha() {
-		$mode = srl()->get_option( 'mode', 'selective' );
+		$mode = selerelo()->get_option( 'mode', 'selective' );
 
 		switch ( $mode ) {
 			case 'global':
@@ -166,7 +166,7 @@ class SRL_Detector {
 	 * @return bool True if page is whitelisted.
 	 */
 	private function is_whitelisted_page() {
-		$whitelist = srl()->get_option( 'whitelist', '' );
+		$whitelist = selerelo()->get_option( 'whitelist', '' );
 		if ( empty( $whitelist ) ) {
 			return false;
 		}
