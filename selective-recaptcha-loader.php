@@ -113,8 +113,15 @@ class Selective_Recaptcha_Loader {
 	 * @return mixed Option value.
 	 */
 	public function get_option( $key, $default = null ) {
+		// MIN-01: 1リクエスト内でのメモ化でパフォーマンス向上
+		static $cache = null;
+
+		if ( null === $cache ) {
+			$cache = get_option( 'selerelo_settings', array() );
+		}
+
 		if ( empty( $this->options ) ) {
-			$this->options = get_option( 'selerelo_settings', array() );
+			$this->options = $cache;
 		}
 
 		return isset( $this->options[ $key ] ) ? $this->options[ $key ] : $default;
@@ -140,6 +147,7 @@ class Selective_Recaptcha_Loader {
 	 */
 	public function update_options( $options ) {
 		$this->options = $options;
+		// MIN-01: autoload=false で大きなデータの自動読み込みを防止
 		update_option( 'selerelo_settings', $options, false );
 	}
 }

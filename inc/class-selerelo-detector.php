@@ -66,13 +66,24 @@ class Selerelo_Detector {
 
 		$is_form_page = false;
 
+		// MIN-03: Early safety check for post object availability
+		if ( ! $post ) {
+			// MIN-03: Log for debugging when WP_DEBUG_LOG is enabled
+			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+				error_log( 'Selerelo: Failed to get post object for form detection' );
+			}
+			// Cache and return safe default
+			$this->cache[ $cache_key ] = false;
+			return false;
+		}
+
 		// Check if post content contains CF7 shortcode.
-		if ( $post && $this->has_cf7_shortcode( $post->post_content ) ) {
+		if ( $this->has_cf7_shortcode( $post->post_content ) ) {
 			$is_form_page = true;
 		}
 
 		// Check if post content contains CF7 blocks.
-		if ( ! $is_form_page && $post && $this->has_cf7_blocks( $post->post_content ) ) {
+		if ( ! $is_form_page && $this->has_cf7_blocks( $post->post_content ) ) {
 			$is_form_page = true;
 		}
 
@@ -179,17 +190,25 @@ class Selerelo_Detector {
 				continue;
 			}
 
-			// Check if it's a regex pattern (starts and ends with /).
+			// CRT-02: ReDoS防御 - 正規表現を安全な部分一致に変更
+			// 旧仕様: /pattern/ 形式での正規表現マッチング
+			// 新仕様: セキュリティ優先で単純文字列一致に降格
 			if ( preg_match( '/^\/.*\/$/', $item ) ) {
-				$current_url = home_url( add_query_arg( array() ) );
-				$match_result = preg_match( $item, $current_url );
-				if ( $match_result === 1 ) {
-					return true;
-				}
-				// 正規表現エラーの場合は無視して継続
-				if ( $match_result === false ) {
+				// CRT-02: 長さ制限でDoS攻撃を防止
+				if ( strlen( $item ) > 256 ) {
 					continue;
 				}
+
+				// CRT-02: 正規表現として扱わず、エスケープ後の部分一致で処理
+				$pattern = trim( $item, '/' ); // スラッシュを除去
+				$pattern = preg_quote( $pattern, '#' ); // 完全エスケープ
+				$current_url = home_url( add_query_arg( array() ) );
+
+				// 安全な部分一致で処理（大小文字無視）
+				if ( stripos( $current_url, trim( $item, '/' ) ) !== false ) {
+					return true;
+				}
+				continue; // 正規表現は処理しない
 			}
 
 			// Check post ID.

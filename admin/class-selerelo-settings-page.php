@@ -80,10 +80,18 @@ class Selerelo_Settings_Page {
 	 * Register settings.
 	 */
 	public function register_settings() {
+		// CRT-01: Early permission check to prevent unauthorized access
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		register_setting(
 			$this->settings_group,
 			$this->option_name,
-			array( $this, 'sanitize_settings' )
+			array(
+				'sanitize_callback' => array( $this, 'sanitize_settings' ),
+				'capability'        => 'manage_options', // CRT-01: Explicit capability requirement
+			)
 		);
 
 		add_settings_section(
@@ -166,8 +174,13 @@ class Selerelo_Settings_Page {
 	 * Render mode field.
 	 */
 	public function render_mode_field() {
+		// MAJ-02: Additional permission check for rendering
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$options = selerelo()->get_options();
-		$mode = isset( $options['mode'] ) ? $options['mode'] : 'selective';
+		$mode = isset( $options['mode'] ) ? sanitize_key( $options['mode'] ) : 'selective'; // MAJ-02: Sanitize on retrieval
 		?>
 		<fieldset>
 			<label>
@@ -189,8 +202,13 @@ class Selerelo_Settings_Page {
 	 * Render whitelist field.
 	 */
 	public function render_whitelist_field() {
+		// MAJ-02: Additional permission check for rendering
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$options = selerelo()->get_options();
-		$whitelist = isset( $options['whitelist'] ) ? $options['whitelist'] : '';
+		$whitelist = isset( $options['whitelist'] ) ? sanitize_textarea_field( $options['whitelist'] ) : ''; // MAJ-02: Sanitize on retrieval
 		?>
 		<textarea name="<?php echo esc_attr( $this->option_name ); ?>[whitelist]" rows="5" cols="50" class="regular-text"><?php echo esc_textarea( $whitelist ); ?></textarea>
 		<p class="description">
@@ -213,18 +231,31 @@ class Selerelo_Settings_Page {
 	 * @return array Sanitized data.
 	 */
 	public function sanitize_settings( $input ) {
+		// MAJ-01: Explicit nonce verification for CSRF protection
+		check_admin_referer( $this->settings_group . '-options' );
+
+		// MAJ-01: Verify option page parameter matches expected settings group
+		if ( ! isset( $_POST['option_page'] ) || sanitize_key( $_POST['option_page'] ) !== $this->settings_group ) {
+			return selerelo()->get_options(); // Return existing options unchanged
+		}
+
 		$sanitized = array();
 
-		// マイグレーション: 既存のautoモードをselectiveに変換
+		// マイグレーション: 既存のautoモードをselectiveに変更
 		$current_options = selerelo()->get_options();
 		if ( isset( $current_options['mode'] ) && 'auto' === $current_options['mode'] ) {
 			// 初回ロード時にautoをselectiveにマイグレーション
 			$input['mode'] = 'selective';
 		}
 
-		// Sanitize mode.
-		if ( isset( $input['mode'] ) && in_array( $input['mode'], array( 'global', 'selective' ), true ) ) {
-			$sanitized['mode'] = $input['mode'];
+		// MAJ-02: Sanitize mode with explicit allowlist for XSS protection
+		if ( isset( $input['mode'] ) ) {
+			$mode = sanitize_key( $input['mode'] );
+			if ( in_array( $mode, array( 'global', 'selective' ), true ) ) {
+				$sanitized['mode'] = $mode;
+			} else {
+				$sanitized['mode'] = 'selective'; // Safe fallback for unknown values
+			}
 		} else {
 			$sanitized['mode'] = 'selective';
 		}
